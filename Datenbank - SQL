@@ -1,0 +1,225 @@
+
+CREATE DATABASE lernhilfe;
+use lernhilfe;
+
+CREATE TABLE THMMitglied (
+	idMitglied INTEGER AUTO_INCREMENT  NOT NULL,
+    EMAIL VARCHAR(255),
+    Username VARCHAR (55),
+    Passwort VARCHAR (255),
+    Rolle VARCHAR(255),
+    CONSTRAINT PK_THMMitglied PRIMARY KEY (idMitglied)
+);
+
+CREATE TABLE ToDo (
+    idToDo INTEGER,
+    idMitglied INTEGER,
+    Titel VARCHAR (30) NOT NULL,
+    DEADLINE DATETIME,
+    Von DATE,
+    Zeitspanne FLOAT,
+    INFO VARCHAR (300),
+    CONSTRAINT PK_ToDo PRIMARY KEY (idMitglied, idToDo),
+    CONSTRAINT FK_ToDo FOREIGN KEY (idMitglied) REFERENCES THMMitglied(idMitglied) 
+    ON DELETE CASCADE
+);
+
+CREATE TABLE Arbeit (
+	idMitglied INTEGER,
+	idArbeit INTEGER,
+    Titel VARCHAR(30),
+	Startzeitpunkt DATETIME,
+	Endzeitpunkt DATETIME,
+    CHECK (startzeitpunkt < Endzeitpunkt),
+    CONSTRAINT PK_Arbeit PRIMARY KEY (idMitglied, idArbeit),
+    CONSTRAINT FK_Arbeit FOREIGN KEY (idMitglied) REFERENCES THMMitglied(idMitglied)
+	ON DELETE CASCADE
+);
+
+CREATE TABLE KarteikartenStapel (
+	idMitglied INTEGER,
+	idKarteikartenStapel INTEGER,
+    Titel VARCHAR(30),
+	Modul VARCHAR(255),
+    CONSTRAINT PK_KarteikartenStapel PRIMARY KEY (idKarteikartenStapel, idMitglied),
+    CONSTRAINT FK_KarteikartenStapel FOREIGN KEY (idMitglied) REFERENCES THMMitglied(idMitglied)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE Karteikarten (
+	idKarteikarte INTEGER,
+	idKarteikartenStapel INTEGER,
+    idMitglied INTEGER,
+	Frage VARCHAR(255),
+	Titel VARCHAR(30),
+    CONSTRAINT PK_Karteikarten PRIMARY KEY (idKarteikarte, idKarteikartenStapel, idMitglied),    
+    CONSTRAINT FK1_Karteikarten FOREIGN KEY (idKarteikartenStapel) REFERENCES KarteikartenStapel(idKarteikartenStapel)
+    ON DELETE CASCADE,
+	CONSTRAINT FK2_Karteikarten FOREIGN KEY (idMitglied) REFERENCES THMMitglied(idMitglied)
+    ON DELETE CASCADE
+);
+
+
+CREATE TABLE Antwortart (
+	Antwortart VARCHAR(255),
+	Bezeichnung VARCHAR(255),
+    CONSTRAINT PK_Antwortart PRIMARY KEY (Antwortart)
+);
+
+CREATE TABLE Antwort (
+    idMitglied INTEGER,
+	Antwortart VARCHAR(255),
+	idKarteikarte INTEGER,
+    idKarteikartenStapel INTEGER,
+    Antwort VARCHAR (255),
+    CONSTRAINT PK_Antwort PRIMARY KEY (idKarteikarte, idMitglied, idKarteikartenStapel),
+    CONSTRAINT FK1_Antwort FOREIGN KEY (Antwortart) REFERENCES Antwortart(Antwortart),
+	CONSTRAINT FK2_Antwort FOREIGN KEY (idKarteikarte) REFERENCES Karteikarten(idKarteikarte)
+    ON DELETE CASCADE,    
+	CONSTRAINT FK3_Antwort FOREIGN KEY (idKarteikartenStapel) REFERENCES KarteikartenStapel(idKarteikartenStapel),
+    CONSTRAINT FK4_Antwort FOREIGN KEY (idMitglied) REFERENCES THMMitglied(idMitglied)
+    ON DELETE CASCADE
+);
+
+
+INSERT INTO THMMitglied (Username, EMail, Passwort, Rolle) VALUES ("Rockel", "Rockel@iem.thm.de", "Max","Student");
+INSERT INTO THMMitglied (Username, EMail, Passwort, Rolle) VALUES ("Schott", "Schott@iem.thm.de", "Erik", "Student");
+INSERT INTO THMMitglied (Username, EMail, Passwort, Rolle) VALUES ("Straßel", "Straßel@iem.thm.de", "Pascal", "Student");
+INSERT INTO THMMitglied (Username, EMail, Passwort, Rolle) VALUES ("Martin", "Martin@iem.thm.de", "Nils", "Student");
+INSERT INTO THMMitglied (Username, EMail, Passwort, Rolle) VALUES ("But", "But@iem.thm.de", "Maxim", "Student");
+INSERT INTO THMMitglied (Username, EMail, Passwort, Rolle) VALUES ("Grebing", "Grebing@iem.thm.de", "Linus", "Student");
+INSERT INTO THMMitglied (Username, EMail, Passwort, Rolle) VALUES ("Lucke", "Lucke@iem.thm.de", "Carsten", "Dozent");
+
+
+INSERT INTO ToDo (idToDo, idMitglied, Titel, DEADLINE, Von, Zeitspanne, INFO) VALUES (1,1,"SWEP-Projekt","2022-04-17 10:38:50","2022-01-01", 80, "Softwarearchitektur");
+INSERT INTO ToDo (idToDo, idMitglied, Titel, DEADLINE, Von, Zeitspanne, INFO) VALUES (1,2,"SWEP-Projekt","2022-04-17 10:38:50","2022-01-01", 80, "Softwarespezifikation");
+INSERT INTO ToDo (idToDo, idMitglied, Titel, DEADLINE, Von, Zeitspanne, INFO) VALUES (1,3,"SWEP-Projekt","2022-04-17 10:38:50","2022-01-01", 80, "Bedienungsanleitung");
+INSERT INTO ToDo (idToDo, idMitglied, Titel, DEADLINE, Von, Zeitspanne, INFO) VALUES (1,4,"SWEP-Projekt","2022-04-17 10:38:50","2022-01-01", 80, "Implementierung");
+INSERT INTO ToDo (idToDo, idMitglied, Titel, DEADLINE, Von, Zeitspanne, INFO) VALUES (1,5,"SWEP-Projekt","2022-04-17 10:38:50","2022-01-01", 80, "Implementierung");
+INSERT INTO ToDo (idToDo, idMitglied, Titel, DEADLINE, Von, Zeitspanne, INFO) VALUES (1,6,"SWEP-Projekt","2022-04-17 10:38:50","2022-01-01", 80, "Testen");
+INSERT INTO ToDo (idToDo, idMitglied, Titel, DEADLINE, Von, Zeitspanne, INFO) VALUES (1,7,"SWEP-Projekt Bewerten","2022-05-01 10:38:50","2022-04-17", 3.5, "100% geben");
+INSERT INTO ToDo (idToDo, idMitglied, Titel) VALUES (2,7,"SWEP-Projekt");
+
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (1,1,"SWEP-Projekt","2022-01-01","2022-01-02");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (2,1,"SWEP-Projekt","2022-03-15","2022-03-16");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (1,2,"SWEP-Projekt","2022-01-01","2022-01-02");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (2,2,"SWEP-Projekt","2022-03-15","2022-03-16");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (1,3,"SWEP-Projekt","2022-01-01","2022-01-02");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (2,3,"SWEP-Projekt","2022-03-15","2022-03-16");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (1,4,"SWEP-Projekt","2022-01-01","2022-01-02");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (2,4,"SWEP-Projekt","2022-03-15","2022-03-16");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (1,5,"SWEP-Projekt","2022-01-01","2022-01-02");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (2,5,"SWEP-Projekt","2022-03-15","2022-03-16");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (1,6,"SWEP-Projekt","2022-01-01","2022-01-02");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (2,6,"SWEP-Projekt","2022-03-15","2022-03-16");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (3,4,"SWEP-Projekt","2022-04-01","2022-04-02");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (4,4,"SWEP-Projekt","2022-04-02","2022-04-03");
+INSERT INTO Arbeit (idArbeit, idMitglied, Titel, Startzeitpunkt, Endzeitpunkt) VALUES (3,3,"SWEP-Projekt","2022-04-05","2022-04-06");
+
+INSERT INTO KarteikartenStapel (idKarteikartenStapel, idMitglied, Titel, Modul) VALUES (1,1,"SoftwareArchitektur", "SWEP");
+INSERT INTO KarteikartenStapel (idKarteikartenStapel, idMitglied, Titel, Modul) VALUES (2,1,"Softwarespezifikation", "SWEP");
+INSERT INTO KarteikartenStapel (idKarteikartenStapel, idMitglied, Titel, Modul) VALUES (1,2,"SoftwareArchitektur", "SWEP");
+INSERT INTO KarteikartenStapel (idKarteikartenStapel, idMitglied, Titel, Modul) VALUES (1,3,"SoftwareArchitektur", "SWEP");
+INSERT INTO KarteikartenStapel (idKarteikartenStapel, idMitglied, Titel, Modul) VALUES (1,4,"SoftwareArchitektur", "SWEP");
+
+
+INSERT INTO Karteikarten (idKarteikarte, idKarteikartenStapel, idMitglied, Titel, Frage) VALUES (1,1,1,"Qualitätsziele","Was wird in den Qualitätszielen festgelegt?");
+INSERT INTO Karteikarten (idKarteikarte, idKarteikartenStapel, idMitglied, Titel, Frage) VALUES (2,1,1,"Stakeholder","Wer sind Stakeholder?");
+INSERT INTO Karteikarten (idKarteikarte, idKarteikartenStapel, idMitglied, Titel, Frage) VALUES (3,1,1,"Randbedingungen","Was ist der Unterschied zwischen technischen und Organisatorischen Randbedingungen?");
+INSERT INTO Karteikarten (idKarteikarte, idKarteikartenStapel, idMitglied, Titel, Frage) VALUES (1,2,1,"Anforderungen","Was gehört in die Verfeinerten Anforderungen");
+INSERT INTO Karteikarten (idKarteikarte, idKarteikartenStapel, idMitglied, Titel, Frage) VALUES (2,2,1,"Mock-Up","Was wird durch Mock-Ups beschrieben?");
+
+
+INSERT INTO Antwortart (Antwortart, Bezeichnung) VALUES (1, "multiple choice");
+INSERT INTO Antwortart (Antwortart, Bezeichnung) VALUES (2, "text");
+INSERT INTO Antwortart (Antwortart, Bezeichnung) VALUES (3, "yes/no");
+
+INSERT INTO Antwort (idMitglied, Antwortart, idKarteikarte, idKarteikartenStapel,  Antwort) VALUES (1,2,1,1, "Ziele um die Qualiät der Software zu gewährleisten");
+INSERT INTO Antwort (idMitglied, Antwortart, idKarteikarte, idKarteikartenStapel, Antwort) VALUES (1,2,2,1, "Alle Akteure, die mit der Software in Verbindung stehen. D.h alle, die diese beeinflussen oder von dieser beeinflusst werden");
+INSERT INTO Antwort (idMitglied, Antwortart, idKarteikarte, idKarteikartenStapel, Antwort) VALUES (1,2,3,1, "Technische Randbedingungen beziehen sich auf die Software an sich, Organisatorische auf die organisatorische Umsetzung der Software");
+INSERT INTO Antwort (idMitglied, Antwortart, idKarteikarte, idKarteikartenStapel, Antwort) VALUES (1,2,1,2, "User-Personas, Funktionale Anforderungen, Qualitätsanforderungen, Ranbedingungen");
+INSERT INTO Antwort (idMitglied, Antwortart, idKarteikarte, idKarteikartenStapel, Antwort) VALUES (1,2,2,2, "Mock-Ups dienen zur Simulation einer Schnittstelle");
+
+-- DROP Procedure toDoAuslesen;
+
+DELIMITER //
+CREATE PROCEDURE toDoAuslesen(IN uid VARCHAR(255))
+BEGIN
+
+SELECT ToDo.idToDo, ToDo.Titel, ToDo.DEADLINE, ToDo.Zeitspanne, ToDo.INFO FROM THMMitglied JOIN Todo ON THMMitglied.idMitglied = ToDo.idMitglied WHERE THMMitglied.Username = uid;
+
+END //
+DELIMITER;
+
+Call toDoAuslesen("Grebing");
+
+SELECT * FROM ToDO;
+
+
+DELIMITER //
+CREATE PROCEDURE MAXToDo (IN uid VARCHAR(255))
+BEGIN
+
+SELECT COUNT(ToDo.idToDo) FROM THMMitglied JOIN Todo ON THMMitglied.idMitglied = ToDo.idMitglied WHERE THMMitglied.Username = uid;
+
+END //
+DELIMITER;
+
+
+DROP Procedure InsertIntoToDo;
+
+DELIMITER |
+CREATE PROCEDURE InsertIntoToDo (IN uid VARCHAR(255), IN Titel VARCHAR (255), IN DEADLINE DATETIME, IN Zeitspanne FLOAT, IN Info VARCHAR(255))
+BEGIN
+
+DECLARE maxToDo INTEGER;
+DECLARE userid INTEGER;
+SELECT distinct Max(ToDo.idToDo) FROM THMMitglied JOIN Todo ON THMMitglied.idMitglied = ToDo.idMitglied WHERE THMMitglied.Username = uid INTO maxToDo;
+SELECT idMitglied FROM THMMitglied WHERE THMMitglied.Username = uid INTO userid;
+
+
+SET maxToDo = maxToDo + 1;
+
+SELECT IFNULL(maxToDo, 1) INTO maxToDo;
+
+SELECT idMitglied FROM THMMitglied WHERE THMMitglied.Username = uid;
+SELECT maxToDo;
+INSERT INTO ToDo(idToDo, idMitglied, Titel, DEADLINE, Von, Zeitspanne, INFO) VALUES (maxToDo, userid, Titel, DEADLINE, NOW(), Zeitspanne, Info);
+
+END |
+DELIMITER ;
+
+
+Call InsertIntoToDo("Straßel", "TEST", "2022-04-17 10:38:50", 1.5, "versagen");
+SELECT * FROM ToDo;
+
+DELETE FROM ToDo WHERE idMitglied = 3;
+
+
+
+DELIMITER |
+CREATE PROCEDURE DeleteToDo (IN uid VARCHAR(255), IN todoid INTEGER)
+BEGIN
+
+DECLARE userid INTEGER;
+
+SELECT DISTINCT Todo.idMitglied FROM THMMitglied JOIN Todo ON THMMitglied.idMitglied = ToDo.idMitglied WHERE THMMitglied.Username = uid INTO userid;
+
+
+DELETE FROM ToDo WHERE idMitglied = userid AND idtodo = todoid; 
+
+END |
+DELIMITER ;
+
+Call DeleteToDo("Grebing", 3);
+
+select * from ToDo;
+
+DELIMITER //
+CREATE PROCEDURE MAXToDo (IN uid VARCHAR(255))
+BEGIN
+
+SELECT COUNT(ToDo.idToDo) FROM THMMitglied JOIN Todo ON THMMitglied.idMitglied = ToDo.idMitglied WHERE THMMitglied.Username = uid;
+
+END //
+DELIMITER ;
