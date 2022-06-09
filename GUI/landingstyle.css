@@ -1,0 +1,97 @@
+div {
+    margin: 0;
+}
+
+main {
+  margin: auto;
+  width: 50%;
+  padding: 1vhpx;
+}
+
+input#logout {
+    font-size: 7vw;
+    border: none;
+    background-color: white;
+    color: #707070;
+}
+
+body {
+    background-image: url("https://deutschlern.net/wp-content/uploads/2021/06/deutschlern.net-buchtipps-erwachsene-deutsch-lernen-anfaenger-raum-mit-buechern-vollgestopft-1024x682.jpg");
+    background-size: 100% 200%;
+    margin: 0;
+    margin-top: 5vh;
+}
+
+footer {
+    width: 100%;
+    height: 5rem;
+    position: absolute;
+    bottom: 0%;
+    background: black 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+#footerText {
+    line-height: 5rem;
+    text-align: center;
+    font: normal normal normal 19px/26px Segoe UI;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+#footerText p {
+    font-size: 2rem;
+}
+
+
+/* CSS der Landingpage */
+
+header{
+    display: flex;
+    background-color: white;
+}
+
+
+.landingPage {
+    margin: 0;
+}
+
+h1.landingPage {
+    margin-top: 5vh;
+    margin-left: 15vw;
+    text-align: left;
+    font: normal 31px/40px Roboto;
+    font-size: 4rem;
+    letter-spacing: 0px;
+    color: #707070;
+}
+
+a {
+    text-decoration: none;
+}
+
+.funktionalität {
+    margin-top: 10%;
+    width: 30vw;
+    height: 30vh;
+    border-radius: 70px;
+
+    border: 4px solid #707070;
+
+    text-align: center;
+    font: normal  30px/40px Segoe UI;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+
+}
+.fnktText {
+    font-size: 4vw;
+    line-height: 30vh;
+}
+
+#ToDo {
+    background: #3D405B 0% 0% no-repeat padding-box;
+}
+

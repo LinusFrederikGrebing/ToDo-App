@@ -1,0 +1,90 @@
+
+* {
+    box-sizing: border-box;
+    background-color: #3D405B;
+    font-family: Arial;
+    color: #FFFFFF;
+}
+
+header button {
+    border: none;
+}
+body {
+    width: 100%;
+    margin: 0;
+}
+
+header {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+
+#addForm {
+    width: 90%;
+    margin: 2em auto;
+    font-size: 1.7rem;
+}
+
+#addForm input {
+    float: right;
+}
+
+
+
+label {
+    pointer-events:none;
+}
+
+.leftArrow {
+    display: inline-block;
+    font-size: 4rem;
+}
+
+.rightArrow {
+    font-size: 3rem;
+}
+
+.plusButton {
+    font-size: 4rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.eintragToDo {
+    display: flex;
+    width: 90%;
+    margin: 1.5em auto;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.eintragToDo .rightArrow {
+    float: right;
+}
+
+input[type=checkbox] {
+    transform: scale(2);
+}
+
+footer {
+    background-color: darkgray;
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+}
+
+hr {
+    border: solid white 2px;
+    width: 100%;
+}
+
+hr#headline {
+    border: solid white 4px;
+}

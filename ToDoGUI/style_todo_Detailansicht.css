@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+    background-color: #3D405B;
+    font-family: Arial;
+    color: #FFFFFF;
+}
+
+header button {
+    border: none;
+}
+
+body {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+header {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+}
+
+label {
+    pointer-events:none;
+}
+
+.leftArrow {
+    display: inline-block;
+    font-size: 4rem;
+}
+
+.detailtodo {
+    width: 90%;
+    margin: 2em auto;
+    font-size: 1.7rem;
+}
+
+.detailtodo p {
+    font-size: 1.3rem;
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+}
+
+footer {
+    background-color: darkgray;
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+}
